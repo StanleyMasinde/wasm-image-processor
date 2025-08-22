@@ -362,7 +362,7 @@
 				}
 
 				const manifestContent = generateManifestJSON();
-				zip.file("manifest-icons-snippet.json", manifestContent);
+				zip.file("manifest-icons.json", manifestContent);
 
 				const zipBlob = await zip.generateAsync({type: "blob"});
 				const zipUrl = URL.createObjectURL(zipBlob);
