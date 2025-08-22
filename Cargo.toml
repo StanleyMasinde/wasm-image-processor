@@ -1,12 +1,28 @@
 [package]
-name = "pwa_image_generator"
+name = "wasm-image-processor"
 version = "0.1.0"
 edition = "2021"
-description = "Generate PWA images"
-
-[dependencies]
-image = "0.25.5"
-wasm-bindgen = "0.2.100"
+authors = ["Stanley Masinde <hello@stanleymasinde.com>"]
+description = "High-performance client-side image processing toolkit powered by Rust and WebAssembly"
+license = "MIT"
+repository = "https://github.com/StanleyMasinde/wasm-image-processor"
+homepage = "https://github.com/StanleyMasinde/wasm-image-processor"
+documentation = "https://stanleymasinde.github.io/wasm-image-processor"
+keywords = ["wasm", "image", "processing", "resize", "pwa"]
+categories = ["multimedia::images", "wasm", "web-programming"]
+readme = "README.md"
+exclude = [
+    "demo/*",
+    "pkg/*",
+    ".github/*",
+    "*.sh",
+    "*.bat"
+]
 
 [lib]
 crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+image = { version = "0.25.5", default-features = false, features = ["png", "jpeg", "webp"] }
+wasm-bindgen = "0.2.100"
+
