@@ -1,0 +1,73 @@
+use std::{error::Error, io::Cursor};
+
+use image::{imageops::FilterType, DynamicImage, ImageReader};
+use wasm_bindgen::prelude::*;
+
+#[wasm_bindgen]
+extern "C" {
+    pub fn alert(s: &str);
+}
+
+#[wasm_bindgen]
+extern "C" {
+    #[wasm_bindgen(js_namespace = console)]
+    pub fn log(m: &str);
+}
+
+#[wasm_bindgen]
+pub fn resize_image(image_data: Vec<u8>, side: u32) -> Vec<u8> {
+    let image = read_image(image_data).unwrap();
+    let mut buf = Vec::new();
+    let _ = image
+        .resize_exact(side, side, FilterType::Lanczos3)
+        .write_to(&mut Cursor::new(&mut buf), image::ImageFormat::Png);
+
+    buf
+}
+
+pub fn read_image(image_data: Vec<u8>) -> Result<DynamicImage, Box<dyn Error>> {
+    let img = ImageReader::new(Cursor::new(image_data))
+        .with_guessed_format()?
+        .decode()?;
+
+    Ok(img)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_read_image() {
+        let test_image_data = include_bytes!("../sample.jpg").to_vec();
+        let result = read_image(test_image_data);
+        assert!(result.is_ok());
+    }
+
+    #[test]
+    fn test_resize_logic() {
+        let test_image_data = include_bytes!("../sample.jpg").to_vec();
+        let resized_bytes = resize_image(test_image_data, 512);
+
+        let resized_image = image::load_from_memory(&resized_bytes).unwrap();
+        assert_eq!(resized_image.width(), 512);
+
+        resized_image.save("test-output/resized.jpg").unwrap();
+    }
+
+    #[test]
+    fn test_multiple_resize() {
+        let test_image_data = include_bytes!("../sample.jpg").to_vec();
+
+        let pwa_sizes = vec![72, 128, 144, 192, 512];
+
+        for size in pwa_sizes {
+            let resized_bytes = resize_image(test_image_data.clone(), size);
+            let resized_image = image::load_from_memory(&resized_bytes).unwrap();
+
+            resized_image
+                .save(format!("./test-output/icons/{size}x{size}.jpg"))
+                .unwrap();
+        }
+    }
+}
