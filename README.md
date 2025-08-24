@@ -73,13 +73,13 @@ Include the WASM module in your web page:
 
 ```html
 <script type="module">
-  import init, { resize_image } from "./pwa_image_generator.js";
-  
+  import init, { resize_square } from "./pwa_image_generator.js";
+
   init().then(() => {
     // WASM module is ready
     const imageData = new Uint8Array(/* your image data */);
     const resizedBytes = resize_image(Array.from(imageData), 500);
-    
+
     // Use resizedBytes as needed
   });
 </script>
@@ -109,7 +109,7 @@ const blob = new Blob([new Uint8Array(resizedBytes)], { type: 'image/png' });
 ```
 wasm-image-processor/
 ├── src/
-│   └─- lib.rs              # Main Rust library  
+│   └─- lib.rs              # Main Rust library
 ├── demo/
 │   ├── index.html          # Basic resizer demo
 │   ├── pwa-generator.html  # PWA icon generator

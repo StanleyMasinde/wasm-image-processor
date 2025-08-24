@@ -23,14 +23,20 @@ function getArrayU8FromWasm0(ptr, len) {
     return getUint8ArrayMemory0().subarray(ptr / 1, ptr / 1 + len);
 }
 /**
+ * Resize an image by the given dimension.
+ * The first parameter is an array of bytes.
+ * The second parameter is the size of the sides.
+ * This function returns square images. It does not respect the aspect
+ * Ratio of the photo.
+ * It is is ideal for icon resizing.
  * @param {Uint8Array} image_data
  * @param {number} side
  * @returns {Uint8Array}
  */
-export function resize_image(image_data, side) {
+export function resize_square(image_data, side) {
     const ptr0 = passArray8ToWasm0(image_data, wasm.__wbindgen_malloc);
     const len0 = WASM_VECTOR_LEN;
-    const ret = wasm.resize_image(ptr0, len0, side);
+    const ret = wasm.resize_square(ptr0, len0, side);
     var v2 = getArrayU8FromWasm0(ret[0], ret[1]).slice();
     wasm.__wbindgen_free(ret[0], ret[1] * 1, 1);
     return v2;

@@ -110,6 +110,8 @@
 </head>
 <body>
 	<main>
+      <a href="/wasm-image-processor/pwa">PWA icon test</a>
+      <hr>
 		<h1>Resizer Demo</h1>
 		<section>
 			<div class="upload-section" id="uploadSection">
@@ -148,7 +150,7 @@
 	</main>
 
 	<script type="module">
-		import init, { resize_image } from "/wasm-image-processor/wasm_image_processor.js";
+		import init, { resize_square } from "/wasm-image-processor/wasm_image_processor.js";
 
 		let wasmModule = null;
 		let selectedImageData = null;
@@ -256,7 +258,7 @@
 
 			try {
 				// Call the WASM resize function
-				const resizedBytes = resize_image(Array.from(selectedImageData), size);
+				const resizedBytes = resize_square(Array.from(selectedImageData), size);
 
 				// Create blob and display resized image
 				const resizedBlob = new Blob([new Uint8Array(resizedBytes)], { type: 'image/png' });

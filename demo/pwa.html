@@ -201,7 +201,7 @@
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 	<script type="module">
-		import init, { resize_image } from "/wasm-image-processor/wasm_image_processor.js";
+		import init, { resize_square } from "/wasm-image-processor/wasm_image_processor.js";
 
 		const PWA_SIZES = [
 			{ size: 16, name: "favicon-16x16.png", purpose: "Favicon" },
@@ -307,7 +307,7 @@
 
 			try {
 				for (const iconSpec of PWA_SIZES) {
-					const resizedBytes = resize_image(Array.from(selectedImageData), iconSpec.size);
+					const resizedBytes = resize_square(Array.from(selectedImageData), iconSpec.size);
 					const blob = new Blob([new Uint8Array(resizedBytes)], { type: 'image/png' });
 					const url = URL.createObjectURL(blob);
 
