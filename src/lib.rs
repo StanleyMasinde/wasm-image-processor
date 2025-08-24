@@ -5,16 +5,10 @@ use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen]
 extern "C" {
-    pub fn alert(s: &str);
-}
-
-#[wasm_bindgen]
-extern "C" {
     #[wasm_bindgen(js_namespace = console)]
     pub fn log(m: &str);
 }
 
-///
 /// Resize an image by the given dimension.
 /// The first parameter is an array of bytes.
 /// The second parameter is the size of the sides.
@@ -26,19 +20,17 @@ pub fn resize_image(image_data: Vec<u8>, side: u32) -> Vec<u8> {
     let image = read_image(image_data).unwrap();
     let mut buf = Vec::new();
     let _ = image
-        .resize_exact(side, side, FilterType::Lanczos3)
+        .resize_exact(side, side, FilterType::Nearest)
         .write_to(&mut Cursor::new(&mut buf), image::ImageFormat::Png);
 
     buf
 }
 
-///
 /// Read image file from a stream of bytes.
 /// This function returns `DynamicImage` so that it can be processed.
 ///
 /// The reason we are passing a Vec<u8> is because wasm_bindgen can pass it to JS.
 /// It cannot directly pass DynamicImage to JS.
-///
 pub fn read_image(image_data: Vec<u8>) -> Result<DynamicImage, Box<dyn Error>> {
     let img = ImageReader::new(Cursor::new(image_data))
         .with_guessed_format()?
