@@ -30,16 +30,18 @@ Try the live demo at: [https://stanleymasinde.github.io/wasm-image-processor/](h
 
 
 ## Installation
+```shell
+npm i wasm-image-processor
+```
 
-**Note**: No npm package is available yet. You need to build from source.
+## Building
 
 ### Prerequisites
 
 - [Rust](https://rustup.rs/)
 - [wasm-pack](https://rustwasm.github.io/wasm-pack/)
 
-### Building
-
+### Steps
 1. Clone the repository:
 ```bash
 git clone https://github.com/yourusername/wasm-image-processor.git
@@ -73,12 +75,12 @@ Include the WASM module in your web page:
 
 ```html
 <script type="module">
-  import init, { resize_square } from "./pwa_image_generator.js";
+  import init, { resize_square } from "pwa_image_generator";
 
   init().then(() => {
     // WASM module is ready
     const imageData = new Uint8Array(/* your image data */);
-    const resizedBytes = resize_image(Array.from(imageData), 500);
+    const resizedBytes = resize_square(Array.from(imageData), 500);
 
     // Use resizedBytes as needed
   });
@@ -87,7 +89,7 @@ Include the WASM module in your web page:
 
 ### API Reference
 
-#### `resize_image(image_data: Vec<u8>, side: u32) -> Vec<u8>`
+#### `resize_square(image_data: Vec<u8>, side: u32) -> Vec<u8>`
 
 Resizes an image to a square with the specified side length.
 
@@ -100,7 +102,7 @@ Resizes an image to a square with the specified side length.
 
 **Example:**
 ```javascript
-const resizedBytes = resize_image(imageBytes, 256);
+const resizedBytes = resize_square(imageBytes, 256);
 const blob = new Blob([new Uint8Array(resizedBytes)], { type: 'image/png' });
 ```
 
@@ -117,7 +119,7 @@ wasm-image-processor/
 │   └── pwa_image_generator_bg.wasm  # Generated WASM binary
 ├── pkg/                    # wasm-pack output
 ├── tests/                  # Test files
-├── copy_pkg.sh            # Build script
+├── prep-demo.sh            # Copy the build to the demo folder
 ├── Cargo.toml
 └── README.md
 ```
@@ -129,9 +131,6 @@ wasm-image-processor/
 ```bash
 # Run Rust tests
 cargo test
-
-# Test with sample images
-cargo test test_resize_logic --lib
 ```
 
 ### Adding New Features
