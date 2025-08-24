@@ -1,7 +1,7 @@
 # WASM Image Processor
 > Process images offline in the Browser.
 
-**⚠️ Early Development Notice**: This project is in active development. APIs may change and there is no npm package available yet. Use at your own risk for production applications.
+**⚠️ Early Development Notice**: This project is in active development. APIs may change. Use at your own risk for production applications.
 
 A high-performance image processing toolkit built with Rust and WebAssembly. Process images entirely client-side with no server uploads required.
 
