@@ -3,7 +3,7 @@ use std::io::Cursor;
 use image::imageops::FilterType;
 use wasm_bindgen::{prelude::wasm_bindgen, JsValue};
 
-use crate::read_image;
+use crate::utils::read_image::read_image;
 
 /// Resize an image by the given dimension.
 /// The first parameter is an array of bytes.
