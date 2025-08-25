@@ -1,6 +1,6 @@
-use std::{error::Error, io::Cursor};
+use std::io::Cursor;
 
-use image::{imageops::FilterType, DynamicImage, ImageReader};
+use image::{imageops::FilterType, DynamicImage, ImageError, ImageReader};
 use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen]
@@ -16,14 +16,16 @@ extern "C" {
 /// Ratio of the photo.
 /// It is is ideal for icon resizing.
 #[wasm_bindgen]
-pub fn resize_square(image_data: Vec<u8>, side: u32) -> Vec<u8> {
-    let image = read_image(image_data).unwrap();
+pub fn resize_square(image_data: Vec<u8>, side: u32) -> Result<Vec<u8>, JsValue> {
+    let image = read_image(image_data)
+        .map_err(|err| JsValue::from_str(&format!("Failed to read image.: {err}")))?;
+
     let mut buf = Vec::new();
     let _ = image
         .resize_exact(side, side, FilterType::Nearest)
         .write_to(&mut Cursor::new(&mut buf), image::ImageFormat::Png);
 
-    buf
+    Ok(buf)
 }
 
 /// Read image file from a stream of bytes.
@@ -31,7 +33,7 @@ pub fn resize_square(image_data: Vec<u8>, side: u32) -> Vec<u8> {
 ///
 /// The reason we are passing a Vec<u8> is because wasm_bindgen can pass it to JS.
 /// It cannot directly pass DynamicImage to JS.
-pub fn read_image(image_data: Vec<u8>) -> Result<DynamicImage, Box<dyn Error>> {
+pub fn read_image(image_data: Vec<u8>) -> Result<DynamicImage, ImageError> {
     let img = ImageReader::new(Cursor::new(image_data))
         .with_guessed_format()?
         .decode()?;
@@ -53,7 +55,7 @@ mod tests {
     #[test]
     fn test_resize_square() {
         let test_image_data = include_bytes!("../sample.jpg").to_vec();
-        let resized_bytes = resize_square(test_image_data, 512);
+        let resized_bytes = resize_square(test_image_data, 512).unwrap();
 
         let resized_image = image::load_from_memory(&resized_bytes).unwrap();
         assert_eq!(resized_image.width(), 512);
@@ -69,7 +71,7 @@ mod tests {
         let pwa_sizes = vec![72, 128, 144, 192, 512];
 
         for size in pwa_sizes {
-            let resized_bytes = resize_square(test_image_data.clone(), size);
+            let resized_bytes = resize_square(test_image_data.clone(), size).unwrap();
             let resized_image = image::load_from_memory(&resized_bytes).unwrap();
 
             resized_image
