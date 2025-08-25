@@ -146,9 +146,9 @@ The codebase is structured to easily add new image processing functions:
 
 **Near Term:**
 - [ ] Stable API design
-- [ ] npm package publication
+- [x] npm package publication
 - [ ] Comprehensive documentation
-- [ ] CI/CD pipeline
+- [x] CI/CD pipeline
 
 **Future Features:**
 - [ ] Image format conversion (PNG ↔ JPEG ↔ WebP)
