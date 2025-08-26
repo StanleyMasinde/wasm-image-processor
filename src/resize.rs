@@ -5,11 +5,11 @@ use wasm_bindgen::{prelude::wasm_bindgen, JsValue};
 
 use crate::utils::read_image::read_image;
 
-/// Resise and image
+/// Resize an image
 /// Take an array of bytes, the len and the width
 /// The image's aspect ratio is preserved.
 /// The image is scaled to the maximum possible size that fits
-/// within the bounds specified by `width` and `nheight`
+/// within the bounds specified by `width` and `height`
 #[wasm_bindgen]
 pub fn resize(image_data: Vec<u8>, width: u32, height: u32) -> Result<Vec<u8>, JsValue> {
     let format = image::guess_format(&image_data)
