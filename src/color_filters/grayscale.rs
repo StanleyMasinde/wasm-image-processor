@@ -1,6 +1,6 @@
 use std::io::Cursor;
 
-use wasm_bindgen::JsValue;
+use wasm_bindgen::{prelude::wasm_bindgen, JsValue};
 
 use crate::utils::read_image::read_image;
 
@@ -8,6 +8,7 @@ use crate::utils::read_image::read_image;
 /// Return a grayscale version of this image.
 /// Returns `Luma` images in most cases. However, for `f32` images,
 /// this will return a grayscale `Rgb/Rgba` image instead.
+#[wasm_bindgen]
 pub fn grayscale(image_data: Vec<u8>) -> Result<Vec<u8>, JsValue> {
     let format = image::guess_format(&image_data)
         .map_err(|err| JsValue::from_str(&format!("Failed to get image type: {err}")))?;
