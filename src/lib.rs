@@ -1,8 +1,7 @@
 use wasm_bindgen::prelude::wasm_bindgen;
 
 pub mod color_filters;
-pub mod resize;
-pub mod resize_square;
+pub mod transformation;
 mod utils;
 
 #[wasm_bindgen]
