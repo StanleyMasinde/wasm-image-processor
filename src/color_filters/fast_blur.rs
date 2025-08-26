@@ -8,7 +8,7 @@ use crate::utils::read_image::read_image;
 /// `sigma` is the standard deviation of the
 /// (approximated) Gaussian
 #[wasm_bindgen]
-pub fn blur(image_data: Vec<u8>, sigma: f32) -> Result<Vec<u8>, JsValue> {
+pub fn fast_blur(image_data: Vec<u8>, sigma: f32) -> Result<Vec<u8>, JsValue> {
     let format = image::guess_format(&image_data)
         .map_err(|err| JsValue::from_str(&format!("Failed to get image type: {err}")))?;
 
@@ -32,7 +32,7 @@ mod test {
     #[test]
     fn test_fast_blur() {
         let test_image_data = include_bytes!("../../sample.jpg").to_vec();
-        let resized_bytes = blur(test_image_data, 4.0).unwrap();
+        let resized_bytes = fast_blur(test_image_data, 4.0).unwrap();
 
         let resized_image = image::load_from_memory(&resized_bytes).unwrap();
 
