@@ -34,57 +34,38 @@ Try the live demo at: [https://stanleymasinde.github.io/wasm-image-processor/](h
 npm i wasm-image-processor
 ```
 
-## Building
-
-### Prerequisites
-
-- [Rust](https://rustup.rs/)
-- [wasm-pack](https://rustwasm.github.io/wasm-pack/)
-
-### Steps
-1. Clone the repository:
-```bash
-git clone https://github.com/yourusername/wasm-image-processor.git
-cd wasm-image-processor
-```
-
-2. Build the WASM package:
-```bash
-wasm-pack build --target web
-```
-
-3. Copy files to demo directory:
-```bash
-# Copy JS and WASM files to demo folder
-./prep-demo.sh
-```
-
-4. Serve the demo locally:
-```bash
-# Using Node.js
-npx serve .
-
-# Or any other static file server
-```
-
-5. Open `http://localhost:3000/demo` in your browser
-
 ### Usage
 
 Include the WASM module in your web page:
 
-```html
-<script type="module">
-  import init, { resize_square } from "pwa_image_generator";
+```javascript
+import { resize_square } from "wasm-image-processor";
 
-  init().then(() => {
-    // WASM module is ready
-    const imageData = new Uint8Array(/* your image data */);
-    const resizedBytes = resize_square(Array.from(imageData), 500);
+// Example: resize an image uploaded via <input type="file">
+const fileInput = document.querySelector<HTMLInputElement>("#fileInput")!;
 
-    // Use resizedBytes as needed
-  });
-</script>
+fileInput.addEventListener("change", () => {
+  const file = fileInput.files?.[0]
+  if (!file) return
+
+  const reader = new FileReader()
+  reader.onload = () => {
+    const arrayBuffer = reader.result as ArrayBuffer
+    const uint8Array = new Uint8Array(arrayBuffer)
+
+    // Resize to 512x512
+    const resizedBytes = resize_square(uint8Array, 512)
+
+    // Create a new File from the resized bytes
+    const resizedImage = new File([resizedBytes], "resized.png", {
+      type: "image/png",
+    })
+
+    console.log("Resized image:", resizedImage)
+  }
+
+  reader.readAsArrayBuffer(file)
+})
 ```
 
 ### API Reference
