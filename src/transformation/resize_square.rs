@@ -34,7 +34,7 @@ mod test {
 
     #[test]
     fn test_resize_square() {
-        let test_image_data = include_bytes!("../sample.jpg").to_vec();
+        let test_image_data = include_bytes!("../../sample.jpg").to_vec();
         let resized_bytes = resize_square(test_image_data, 512).unwrap();
 
         let resized_image = image::load_from_memory(&resized_bytes).unwrap();
@@ -46,7 +46,7 @@ mod test {
 
     #[test]
     fn test_multiple_resize_square() {
-        let test_image_data = include_bytes!("../sample.jpg").to_vec();
+        let test_image_data = include_bytes!("../../sample.jpg").to_vec();
 
         let pwa_sizes = vec![72, 128, 144, 192, 512];
 

@@ -33,7 +33,7 @@ mod test {
 
     #[test]
     fn test_resize() {
-        let test_image_data = include_bytes!("../sample.jpg").to_vec();
+        let test_image_data = include_bytes!("../../sample.jpg").to_vec();
         let resized_bytes = resize(test_image_data, 512, 513).unwrap();
 
         let resized_image = image::load_from_memory(&resized_bytes).unwrap();
