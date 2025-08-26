@@ -13,13 +13,16 @@ use crate::utils::read_image::read_image;
 /// It is is ideal for icon resizing.
 #[wasm_bindgen]
 pub fn resize_square(image_data: Vec<u8>, side: u32) -> Result<Vec<u8>, JsValue> {
+    let format = image::guess_format(&image_data)
+        .map_err(|err| JsValue::from_str(&format!("Failed to get the image format: {err}")))?;
+
     let image = read_image(image_data)
         .map_err(|err| JsValue::from_str(&format!("Failed to read image.: {err}")))?;
 
     let mut buf = Vec::new();
     let _ = image
         .resize_exact(side, side, FilterType::Nearest)
-        .write_to(&mut Cursor::new(&mut buf), image::ImageFormat::Png);
+        .write_to(&mut Cursor::new(&mut buf), format);
 
     Ok(buf)
 }

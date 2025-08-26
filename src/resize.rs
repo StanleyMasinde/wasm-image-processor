@@ -12,13 +12,16 @@ use crate::utils::read_image::read_image;
 /// within the bounds specified by `width` and `nheight`
 #[wasm_bindgen]
 pub fn resize(image_data: Vec<u8>, width: u32, height: u32) -> Result<Vec<u8>, JsValue> {
+    let format = image::guess_format(&image_data)
+        .map_err(|err| JsValue::from_str(&format!("Failed to get the image format: {err}")))?;
+
     let image = read_image(image_data)
         .map_err(|err| JsValue::from_str(&format!("Failed to read image.: {err}")))?;
 
     let mut buf = Vec::new();
     let _ = image
         .resize(width, height, FilterType::Nearest)
-        .write_to(&mut Cursor::new(&mut buf), image::ImageFormat::Png);
+        .write_to(&mut Cursor::new(&mut buf), format);
 
     Ok(buf)
 }
@@ -35,6 +38,8 @@ mod test {
         let resized_image = image::load_from_memory(&resized_bytes).unwrap();
         assert_eq!(resized_image.width(), 512);
 
-        resized_image.save("test-output/aspect_resized.jpg").unwrap();
+        resized_image
+            .save("test-output/aspect_resized.jpg")
+            .unwrap();
     }
 }
