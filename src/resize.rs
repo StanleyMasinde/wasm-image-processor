@@ -19,9 +19,10 @@ pub fn resize(image_data: Vec<u8>, width: u32, height: u32) -> Result<Vec<u8>, J
         .map_err(|err| JsValue::from_str(&format!("Failed to read image.: {err}")))?;
 
     let mut buf = Vec::new();
-    let _ = image
+    image
         .resize(width, height, FilterType::Nearest)
-        .write_to(&mut Cursor::new(&mut buf), format);
+        .write_to(&mut Cursor::new(&mut buf), format)
+        .map_err(|err| JsValue::from_str(&format!("Failed to resize the image: {err}")))?;
 
     Ok(buf)
 }
