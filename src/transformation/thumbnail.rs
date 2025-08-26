@@ -18,7 +18,7 @@ pub fn thumbnail(image_data: Vec<u8>, width: u32, height: u32) -> Result<Vec<u8>
         .map_err(|err| JsValue::from_str(&format!("Failed to get the image format: {err}")))?;
 
     let image = read_image(image_data)
-        .map_err(|err| JsValue::from_str(&format!("Failed to read image.: {err}")))?;
+        .map_err(|err| JsValue::from_str(&format!("Failed to read image: {err}")))?;
 
     let mut buf = Vec::new();
     image

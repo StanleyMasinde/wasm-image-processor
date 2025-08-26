@@ -17,13 +17,13 @@ pub fn crop(
         .map_err(|err| JsValue::from_str(&format!("Failed to get the image format: {err}")))?;
 
     let mut image = read_image(image_data)
-        .map_err(|err| JsValue::from_str(&format!("Failed to read image.: {err}")))?;
+        .map_err(|err| JsValue::from_str(&format!("Failed to read image: {err}")))?;
 
     let mut buf = Vec::new();
     image
         .crop(x, y, width, height)
         .write_to(&mut Cursor::new(&mut buf), format)
-        .map_err(|err| JsValue::from_str(&format!("Failed to resize the image: {err}")))?;
+        .map_err(|err| JsValue::from_str(&format!("Failed to crop the image: {err}")))?;
 
     Ok(buf)
 }
