@@ -20,9 +20,10 @@ pub fn resize_square(image_data: Vec<u8>, side: u32) -> Result<Vec<u8>, JsValue>
         .map_err(|err| JsValue::from_str(&format!("Failed to read image.: {err}")))?;
 
     let mut buf = Vec::new();
-    let _ = image
+    image
         .resize_exact(side, side, FilterType::Nearest)
-        .write_to(&mut Cursor::new(&mut buf), format);
+        .write_to(&mut Cursor::new(&mut buf), format)
+        .map_err(|err| JsValue::from_str(&format!("Failed to resize image.: {err}")))?;
 
     Ok(buf)
 }
