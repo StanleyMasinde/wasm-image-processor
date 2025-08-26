@@ -14,7 +14,7 @@ env:
 jobs:
   build-and-publish:
     runs-on: ubuntu-latest
-    
+
     steps:
     - uses: actions/checkout@v4
 
@@ -38,13 +38,13 @@ jobs:
       with:
         node-version: '22'
         registry-url: 'https://registry.npmjs.org'
-        
+
     - name: Publish to npm
       if: github.event_name == 'release' && github.event.action == 'published'
-      run: npm publish
+      run: wasm-pack publish
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-      
+
     - uses: actions/upload-artifact@v4
       with:
         name: wasm-package
