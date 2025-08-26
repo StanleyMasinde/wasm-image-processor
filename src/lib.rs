@@ -1,5 +1,6 @@
 use wasm_bindgen::prelude::wasm_bindgen;
 
+pub mod grayscale;
 pub mod resize;
 pub mod resize_square;
 mod utils;
