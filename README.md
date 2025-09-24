@@ -17,9 +17,6 @@ A high-performance image processing toolkit built with Rust and WebAssembly. Pro
 
 Try the live demo at: [https://wasm-ip-demo.vercel.app](https://wasm-ip-demo.vercel.app)
 
-- **Basic Resizer**: Resize images to custom dimensions
-- **PWA Icon Generator**: Generate complete icon sets for web apps
-
 ## Current Features
 
 ### Image Resizing
