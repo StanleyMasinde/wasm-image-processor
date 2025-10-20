@@ -7,10 +7,8 @@ A high-performance image processing toolkit built with Rust and WebAssembly. Pro
 
 - **Offline Processing**: All image operations happen in your browser
 - **High Performance**: Powered by Rust and WebAssembly
-- **No Data Transfer**: Images never leave your device
 - **PWA Icon Generation**: Create complete icon sets for Progressive Web Apps
 - **Multiple Formats**: Support for JPEG, PNG, WebP, and more
-- **Batch Processing**: Generate multiple sizes from a single image
 
 ## Demo
 
