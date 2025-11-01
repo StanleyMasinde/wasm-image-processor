@@ -61,67 +61,12 @@ fileInput.addEventListener("change", () => {
 })
 ```
 
-### API Reference
-
-#### `resize_square(image_data: Vec<u8>, side: u32) -> Vec<u8>`
-
-Resizes an image to a square with the specified side length.
-
-**Parameters:**
-- `image_data`: Image data as a byte array
-- `side`: Target width/height in pixels (1-5000)
-
-**Returns:**
-- PNG-encoded image data as byte array
-
-**Example:**
-```javascript
-const resizedBytes = resize_square(imageBytes, 256);
-const blob = new Blob([new Uint8Array(resizedBytes)], { type: 'image/png' });
-```
-
-## Project Structure
-
-```
-wasm-image-processor/
-├── src/
-│   └─- lib.rs              # Main Rust library
-├── demo/
-│   ├── index.html          # Basic resizer demo
-│   ├── pwa-generator.html  # PWA icon generator
-│   ├── pwa_image_generator.js    # Generated JS bindings
-│   └── pwa_image_generator_bg.wasm  # Generated WASM binary
-├── pkg/                    # wasm-pack output
-├── tests/                  # Test files
-├── prep-demo.sh            # Copy the build to the demo folder
-├── Cargo.toml
-└── README.md
-```
-
-## Development
-
-### Running Tests
-
-```bash
-# Run Rust tests
-cargo test
-```
-
-### Adding New Features
-
-The codebase is structured to easily add new image processing functions:
-
-1. Add your function to `src/lib.rs`
-2. Mark it with `#[wasm_bindgen]`
-3. Rebuild with `wasm-pack build --target web`
-4. Update the demo pages to use your new function
-
 ## Roadmap
 
 **Near Term:**
 - [ ] Stable API design
 - [x] npm package publication
-- [ ] Comprehensive documentation
+- [x] Comprehensive documentation
 - [x] CI/CD pipeline
 
 **Future Features:**
