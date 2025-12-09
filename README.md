@@ -1,5 +1,6 @@
 # WASM Image Processor
-> Process images offline in the Browser.
+> Process images offline in the browser. 
+> It uses WASM to expose a Rust image processing crate. 
 
 A high-performance image processing toolkit built with Rust and WebAssembly. Process images entirely client-side with no server uploads required.
 
