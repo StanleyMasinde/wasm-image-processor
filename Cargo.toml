@@ -1,6 +1,6 @@
 [package]
 name = "wasm-image-processor"
-version = "0.5.0"
+version = "0.6.0"
 edition = "2024"
 authors = ["Stanley Masinde <hello@stanleymasinde.com>"]
 description = "High-performance client-side image processing toolkit powered by Rust and WebAssembly"
@@ -23,8 +23,8 @@ exclude = [
 crate-type = ["cdylib", "rlib"]
 
 [dependencies]
-image = { version = "0.25.5", default-features = false, features = ["png", "jpeg", "webp"] }
-wasm-bindgen = "0.2.100"
+image = { version = "0.25", default-features = false, features = ["png", "jpeg", "webp"] }
+wasm-bindgen = "0.2"
 
 [profile.release]
 lto = true
