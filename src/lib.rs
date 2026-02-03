@@ -3,6 +3,7 @@ use wasm_bindgen::prelude::wasm_bindgen;
 pub mod color_filters;
 pub mod transformation;
 mod utils;
+pub mod chaining;
 
 #[wasm_bindgen]
 extern "C" {
